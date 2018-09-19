@@ -4,6 +4,47 @@ public static class Bob
 {
     public static string Response(string statement)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        bool isQuestion = false;
+        bool isYelling = false;
+        //Total five answers !
+
+        //Bob answers 'Sure.' if you ask him a question.
+        if (statement.Contains("?"))
+            isQuestion = true;
+
+        //He answers 'Whoa, chill out!' if you yell at him.
+        //All the letters in the string are capital
+        foreach (char ch in statement)
+        {
+            if (!char.IsUpper(ch) && char.IsLetter(ch))
+            {
+                isYelling = false;
+                break;
+            }
+            if (char.IsUpper(ch) && char.IsLetter(ch))
+            {
+                isYelling = true;
+            }
+        }
+
+        //He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+        if (isYelling == true && isQuestion == true)
+            return "Calm down, I know what I'm doing!";
+
+        //Bob answers 'Sure.' if you ask him a question.
+        if (isQuestion)
+            return "Sure.";
+
+        //He answers 'Whoa, chill out!' if you yell at him.
+        if (isYelling)
+            return "Whoa, chill out!";
+        
+        //He says 'Fine. Be that way!' if you address him without actually saying anything.
+        //Not Implemented
+
+        //He answers 'Whatever.' to anything else.
+        return "Whatever.";
+
     }
+
 }
