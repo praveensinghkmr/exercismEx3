@@ -7,9 +7,12 @@ public static class Bob
         bool isQuestion = false;
         bool isYelling = false;
         //Total five answers !
+        //He says 'Fine. Be that way!' if you address him without actually saying anything.
+        if (string.IsNullOrWhiteSpace(statement))
+            return "Fine. Be that way!";
 
         //Bob answers 'Sure.' if you ask him a question.
-        if (statement.Contains("?"))
+        if (statement.Trim().EndsWith("?"))
             isQuestion = true;
 
         //He answers 'Whoa, chill out!' if you yell at him.
@@ -26,7 +29,7 @@ public static class Bob
                 isYelling = true;
             }
         }
-
+        
         //He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
         if (isYelling == true && isQuestion == true)
             return "Calm down, I know what I'm doing!";
@@ -39,9 +42,7 @@ public static class Bob
         if (isYelling)
             return "Whoa, chill out!";
         
-        //He says 'Fine. Be that way!' if you address him without actually saying anything.
-        //Not Implemented
-
+        
         //He answers 'Whatever.' to anything else.
         return "Whatever.";
 
