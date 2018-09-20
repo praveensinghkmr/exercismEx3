@@ -1,51 +1,63 @@
 using System;
 
-public static class Bob
+public class Bob
 {
     public static string Response(string statement)
     {
-        bool isQuestion = false;
-        bool isYelling = false;
-        //Total five answers !
+        statement = statement.Trim();
+
         //He says 'Fine. Be that way!' if you address him without actually saying anything.
-        if (string.IsNullOrWhiteSpace(statement))
+        if (IsSilence(statement))
             return "Fine. Be that way!";
-
-        //Bob answers 'Sure.' if you ask him a question.
-        if (statement.Trim().EndsWith("?"))
-            isQuestion = true;
-
-        //He answers 'Whoa, chill out!' if you yell at him.
-        //All the letters in the string are capital
-        foreach (char ch in statement)
+        if (IsYelling(statement) == true)
         {
-            if (!char.IsUpper(ch) && char.IsLetter(ch))
-            {
-                isYelling = false;
-                break;
-            }
-            if (char.IsUpper(ch) && char.IsLetter(ch))
-            {
-                isYelling = true;
-            }
+            if (IsQuestion(statement) == true)
+                //He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
+                return "Calm down, I know what I'm doing!";
+            else
+                //He answers 'Whoa, chill out!' if you yell at him.
+                return "Whoa, chill out!";
         }
-        
-        //He answers 'Calm down, I know what I'm doing!' if you yell a question at him.
-        if (isYelling == true && isQuestion == true)
-            return "Calm down, I know what I'm doing!";
-
         //Bob answers 'Sure.' if you ask him a question.
-        if (isQuestion)
+        if (IsQuestion(statement))
             return "Sure.";
-
-        //He answers 'Whoa, chill out!' if you yell at him.
-        if (isYelling)
-            return "Whoa, chill out!";
-        
-        
         //He answers 'Whatever.' to anything else.
         return "Whatever.";
 
+    }
+    static bool IsSilence(string statement)
+    {
+        if (string.IsNullOrWhiteSpace(statement))
+            return true;
+        return false;
+    }
+
+    static bool IsQuestion(string statement)
+    {
+        if (statement.EndsWith("?"))
+            return true;
+        return false;
+    }
+
+    static bool IsYelling(string statement)
+    {
+        bool isYelling = false;
+        foreach (char ch in statement)
+        {
+            if (char.IsLetter(ch))
+            {
+                if (!char.IsUpper(ch))
+                {
+                    isYelling = false;
+                    break;
+                }
+                else
+                {
+                    isYelling = true;
+                }
+            }
+        }
+        return isYelling;
     }
 
 }
